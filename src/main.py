@@ -9,7 +9,7 @@ from schemas import *
 from crud import *
 
 # Создаем таблицы при запуске
-app = FastAPI(title="My FastAPI App")
+app = FastAPI(title="Database")
 
 @app.on_event("startup")
 def init_db():
@@ -67,9 +67,9 @@ def delete_article(article_id: int, db: Session = Depends(get_db)):
 @app.post("/places", response_model=PlaceResponse)
 def create_place(place: PlaceCreate, db: Session = Depends(get_db)):
     # Checking existance of place
-    # existing_place = PlaceCRUD.get_by_articleID(db, place.url)
-    # if existing_place:
-    #     raise HTTPException(status_code=400, detail="Email already registered")
+    existing_place = PlaceCRUD.is_exist(db, place.articleID, place.address)
+    if existing_place:
+        raise HTTPException(status_code=400, detail="Email already registered")
     
     # Creating place
     db_place = PlaceCRUD.create(db, place)
@@ -107,4 +107,4 @@ def delete_place(place_id: int, db: Session = Depends(get_db)):
 
 @app.get("/")
 def root():
-    return {"message": "Hello World", "endpoints": ["/articles", "/articles/{id}", "/docs"]}
+    return {"message": "Hello World", "endpoints": ["/articles", "/articles/{id}", "/places", "/places/{id}", "/docs"]}

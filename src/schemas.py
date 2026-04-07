@@ -24,13 +24,13 @@ class ArticleUpdate(BaseModel):
 
 class PlaceCreate(BaseModel):
     articleID: int
-    addres: str
+    address: str
     coord: str
 
 class PlaceResponse(BaseModel):
     id: int
     articleID: int
-    addres: str
+    address: str
     coord: str
 
     class Config:
@@ -38,5 +38,5 @@ class PlaceResponse(BaseModel):
 
 class PlaceUpdate(BaseModel):
     articleID: Optional[int] = None
-    addres: Optional[str] = None
+    address: Optional[str] = None
     coord: Optional[str] = None

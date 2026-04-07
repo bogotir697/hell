@@ -65,6 +65,10 @@ class PlaceCRUD:
     @staticmethod
     def get_by_articleID(db: Session, place_articleID: int) -> List[Place]:
         return db.query(Place).filter(Place.articleID == place_articleID).all()
+    
+    @staticmethod
+    def is_exist(db: Session, place_articleID: int, place_address: str) -> Optional[Place]:
+        return db.query(Place).filter(Place.articleID == place_articleID and Place.address == place_address).count() >= 1
 
     @staticmethod
     def update(db: Session, place_id: int, place_update: PlaceUpdate) -> Optional[Place]:
