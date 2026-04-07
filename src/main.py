@@ -105,6 +105,14 @@ def delete_place(place_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Place not found")
     return {"message": "Place deleted"}
 
+@app.get("/articles/{article_id}/places", response_model=PlaceResponse)
+def get_place_articleID(article_id: int, db: Session = Depends(get_db)):
+    article = ArticleCRUD.get_by_id(db, article_id)
+    if not article:
+        raise HTTPException(status_code=404, detail="Article with this id not found")
+    places = PlaceCRUD.get_by_articleID(db, article_id)
+    return places
+
 @app.get("/")
 def root():
     return {"message": "Hello World", "endpoints": ["/articles", "/articles/{id}", "/places", "/places/{id}", "/docs"]}
