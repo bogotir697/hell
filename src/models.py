@@ -9,7 +9,9 @@ class Article(Base):
     id = Column(Integer, primary_key=True, index=True)
     url = Column(String, nullable=False, unique=True)
     date = Column(DateTime(timezone=True), nullable=True)
-    text = Column(String, nullable=True)
+    title = Column(String, nullable=False, unique=True)
+    subtitle = Column(String, nullable=True)
+    tags = Column(String, nullable=True)
 
     def __repr__(self):
         return f"<Article(id={self.id}, url={self.url}, date={self.date}, text={self.text})>"

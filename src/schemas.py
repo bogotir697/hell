@@ -6,13 +6,17 @@ from typing import Optional
 class ArticleCreate(BaseModel):
     url: str
     date: Optional[datetime] = None
-    text: str
+    title: str
+    subtitle: str
+    tags: str
 
 class ArticleResponse(BaseModel):
     id: int
     url: str
     date: Optional[datetime] = None
-    text: str
+    title: str
+    subtitle: Optional[str] = None
+    tags: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -20,7 +24,9 @@ class ArticleResponse(BaseModel):
 class ArticleUpdate(BaseModel):
     url: Optional[str] = None
     date: Optional[datetime] = None
-    text: Optional[str] = None
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    tags: Optional[str] = None
 
 class PlaceCreate(BaseModel):
     articleID: int

@@ -10,7 +10,9 @@ class ArticleCRUD:
     def create(db: Session, article: ArticleCreate) -> Article:
         db_article = Article(url=article.url, 
                              date=article.date, 
-                             text=article.text)
+                             title=article.title,
+                             subtitle=article.subtitle,
+                             tags=article.tags)
         db.add(db_article)
         db.commit()
         db.refresh(db_article)
