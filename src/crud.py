@@ -30,6 +30,26 @@ class ArticleCRUD:
     @staticmethod
     def get_by_url(db: Session, article_url: int) -> Optional[Article]:
         return db.query(Article).filter(Article.url == article_url).first()
+    
+    @staticmethod
+    def update(db: Session, article_id: int, article_update: ArticleUpdate) -> Optional[Article]:
+        db_article = ArticleCRUD.get_by_id(db, article_id)
+        if db_article:
+            if article_update.url:
+                db_article.url = article_update.url
+            if article_update.title:
+                db_article.title = article_update.title
+            if article_update.subtitle:
+                db_article.subtitle = article_update.subtitle
+            if article_update.position:
+                db_article.position = article_update.position
+            if article_update.date:
+                db_article.date = article_update.date
+            if article_update.tags:
+                db_article.tags = article_update.tags
+            db.commit()
+            db.refresh(db_article)
+        return db_article
 
     @staticmethod
     def delete(db: Session, article_id: int) -> bool:
